@@ -35,9 +35,38 @@ int init_window()
     return SUCCESS;
 }
 
+int init_renderer()
+{
+    renderer = NULL;
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (renderer == NULL)
+    {
+        printf("Could not initialize renderer: %s\n", SDL_GetError());
+        return -1;
+    }
+
+    return 1;
+}
+
+int init_TTF()
+{
+    if (TTF_Init() == -1)
+    {
+        printf("Could not initialize TTF: %s\n", SDL_GetError());
+        return -1;
+    }
+
+    return 1;
+}
+
 int init_game_of_life()
 {
     if (!init_window())
+    {
+        return FAIL;
+    }
+
+    if (!init_renderer())
     {
         return FAIL;
     }
