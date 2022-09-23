@@ -48,17 +48,6 @@ int init_renderer()
     return 1;
 }
 
-int init_TTF()
-{
-    if (TTF_Init() == -1)
-    {
-        printf("Could not initialize TTF: %s\n", SDL_GetError());
-        return -1;
-    }
-
-    return 1;
-}
-
 int init_game_of_life()
 {
     if (!init_window())

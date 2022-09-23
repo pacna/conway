@@ -1,5 +1,5 @@
-#ifndef _GLOBAL
-#define _GLOBAL
+#ifndef GLOBAL__
+#define GLOBAL__
 
 // C headers
 #include <stdio.h>
@@ -11,12 +11,13 @@
 
 // project headers
 #include "init.h"
+#include "colors.h"
 #include "game_of_life.h"
 
 #define SUCCESS 1
 #define FAIL 0
 
-extern SDL_Window *window;
-extern SDL_Renderer *renderer;
+extern SDL_Window* window;
+extern SDL_Renderer* renderer;
 
 #endif
