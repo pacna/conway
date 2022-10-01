@@ -1,5 +1,7 @@
 #include "global.h"
 
+grid_t grid, next_generation_grid;
+
 void process_input()
 {
     SDL_Event event;
@@ -16,43 +18,30 @@ void process_input()
     }
 }
 
-void create_rect(rect_t rect)
+void create_rect(SDL_Rect rect, color_t color)
 {
-    SDL_Rect sdl_rect;
-    sdl_rect.x = rect.x;
-    sdl_rect.y = rect.y;
-    sdl_rect.w = rect.w;
-    sdl_rect.h = rect.h;
-
-    rgba_t sdl_rect_rgba = get_rgba(rect.color);
+    rgba_t sdl_rect_rgba = get_rgba(color);
 
     SDL_SetRenderDrawColor(renderer, sdl_rect_rgba.red, sdl_rect_rgba.green, sdl_rect_rgba.blue, sdl_rect_rgba.alpha);
-    SDL_RenderDrawRect(renderer, &sdl_rect);
+    SDL_RenderDrawRect(renderer, &rect);
 }
 
-void create_fill_rect(rect_t rect)
+void create_fill_rect(SDL_Rect rect, color_t color)
 {
-    SDL_Rect sdl_rect;
-    sdl_rect.x = rect.x;
-    sdl_rect.y = rect.y;
-    sdl_rect.w = rect.w;
-    sdl_rect.h = rect.h;
-
-    rgba_t sdl_rect_rgba = get_rgba(rect.color);
+    rgba_t sdl_rect_rgba = get_rgba(color);
 
     SDL_SetRenderDrawColor(renderer, sdl_rect_rgba.red, sdl_rect_rgba.green, sdl_rect_rgba.blue, sdl_rect_rgba.alpha);
-    SDL_RenderFillRect(renderer, &sdl_rect);
+    SDL_RenderFillRect(renderer, &rect);
 }
 
 void render_square()
 {
-    rect_t rect;
-    rect.x = 0;
-    rect.y = 0;
-    rect.w = 20;
-    rect.h = 20;
-    rect.color = red;
-    create_rect(rect);
+    SDL_Rect rect;
+    rect.x = START_X(0);
+    rect.y = START_Y(0);
+    rect.w = CELL_SIZE;
+    rect.h = CELL_SIZE;
+    create_rect(rect, green);
 }
 
 void render_background()
