@@ -1,6 +1,6 @@
 #include "global.h"
 
-grid_t grid, next_generation_grid;
+grid_t current_generation, next_generation;
 
 void process_input()
 {
@@ -34,14 +34,38 @@ void create_fill_rect(SDL_Rect rect, color_t color)
     SDL_RenderFillRect(renderer, &rect);
 }
 
-void render_square()
+void render_square(int x, int y, int is_alive)
 {
     SDL_Rect rect;
-    rect.x = START_X(0);
-    rect.y = START_Y(0);
+    rect.x = NEXT_X(x);
+    rect.y = NEXT_Y(y);
     rect.w = CELL_SIZE;
     rect.h = CELL_SIZE;
-    create_rect(rect, green);
+
+    if (is_alive)
+    {
+        create_fill_rect(rect, green);
+    }
+    else
+    {
+        create_rect(rect, green);
+    }
+}
+
+void init_generation()
+{
+    for (int i = 0; i < GRID_SIZE; i++)
+    {
+        current_generation.cells[i].state = random_num(0, 1);
+    }
+}
+
+void render_game_of_life()
+{
+    for (int i = 0; i < GRID_SIZE; i++)
+    {
+        render_square(get_cell_x_pos(i), get_cell_y_pos(i), current_generation.cells[i].state);
+    }
 }
 
 void render_background()
@@ -54,12 +78,14 @@ void render()
 {
     render_background();
     SDL_RenderClear(renderer);
-    render_square();
+    render_game_of_life();
     SDL_RenderPresent(renderer);
 }
 
 void run_program()
 {
+    init_generation();
+
     while (true)
     {
         process_input();
