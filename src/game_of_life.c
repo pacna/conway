@@ -62,6 +62,9 @@ void init_generation()
 
 void render_game_of_life()
 {
+    render_text("Game of Life", 0, 0);
+    render_text("Generation 0", 0, WINDOW_HEIGHT - GRID_Y_PADDING);
+
     for (int i = 0; i < GRID_SIZE; i++)
     {
         render_square(get_cell_x_pos(i), get_cell_y_pos(i), current_generation.cells[i].state);
@@ -77,7 +80,6 @@ void render_background()
 void render()
 {
     render_background();
-    SDL_RenderClear(renderer);
     render_game_of_life();
     SDL_RenderPresent(renderer);
 }
@@ -91,6 +93,8 @@ void run_program()
         process_input();
         render();
     }
+
+    SDL_DestroyRenderer(renderer);
 }
 
 void run_game_of_life()

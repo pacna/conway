@@ -26,5 +26,6 @@ typedef struct RGBA
 
 extern uint8_t color_values[TOTAL_COLOR_SIZE];
 extern rgba_t get_rgba(color_t color_index);
+extern SDL_Color get_sdl_rgba(color_t color_index);
 
 #endif

@@ -14,9 +14,7 @@
 #include "colors.h"
 #include "game_of_life.h"
 #include "utils.h"
-
-#define SUCCESS 1
-#define FAIL 0
+#include "text.h"
 
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
