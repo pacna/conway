@@ -1,6 +1,6 @@
 #include "global.h"
 
-int init_SDL()
+int init_SDL(void)
 {
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
@@ -11,7 +11,7 @@ int init_SDL()
     return 1;
 }
 
-int init_window()
+int init_window(void)
 {
     window = NULL;
 
@@ -35,7 +35,7 @@ int init_window()
     return 1;
 }
 
-int init_renderer()
+int init_renderer(void)
 {
     renderer = NULL;
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -48,7 +48,7 @@ int init_renderer()
     return 1;
 }
 
-int init_TTF()
+int init_TTF(void)
 {
     if (TTF_Init() == -1)
     {
@@ -59,7 +59,7 @@ int init_TTF()
     return 1;
 }
 
-int init_game_of_life()
+int init_game_of_life(void)
 {
     if (!init_window())
     {

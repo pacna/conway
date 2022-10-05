@@ -1,6 +1,6 @@
 #include "global.h"
 
-void render_text(char *text, int x, int y)
+void render_text(char *text, unsigned int x, unsigned int y, unsigned int w, unsigned int h)
 {
     TTF_Font *open_sans = TTF_OpenFont("fonts/OpenSans-Regular.ttf", 60);
 
@@ -14,8 +14,8 @@ void render_text(char *text, int x, int y)
     SDL_Rect message_rect;
     message_rect.x = x;
     message_rect.y = y;
-    message_rect.w = WINDOW_WIDTH;
-    message_rect.h = 90;
+    message_rect.w = w;
+    message_rect.h = h;
 
     SDL_Surface *surface_message = TTF_RenderText_Solid(open_sans, text, sdl_green);
 

@@ -11,14 +11,16 @@ $ apt-get install libsdl2-ttf-dev
 ```
 
 ## Troubleshoot
+
 If you experience this error
+
 ```
 make: gcc: No such file or directory
 make: *** [<builtin>: src/main.o] Error 127
 ```
 
 Install the following
-```bash
-$ sudo apt install gcc
-```
 
+```bash
+$ apt install gcc
+```

@@ -2,7 +2,9 @@
 
 grid_t current_generation, next_generation;
 
-void process_input()
+unsigned int generation_count = 0;
+
+void process_input(void)
 {
     SDL_Event event;
     while (SDL_PollEvent(&event))
@@ -34,7 +36,7 @@ void create_fill_rect(SDL_Rect rect, color_t color)
     SDL_RenderFillRect(renderer, &rect);
 }
 
-void render_square(int x, int y, int is_alive)
+void render_square(unsigned int x, unsigned int y, int is_alive)
 {
     SDL_Rect rect;
     rect.x = NEXT_X(x);
@@ -52,7 +54,7 @@ void render_square(int x, int y, int is_alive)
     }
 }
 
-void init_generation()
+void init_generation(void)
 {
     for (int i = 0; i < GRID_SIZE; i++)
     {
@@ -60,10 +62,10 @@ void init_generation()
     }
 }
 
-void render_game_of_life()
+void render_game_of_life(void)
 {
-    render_text("Game of Life", 0, 0);
-    render_text("Generation 0", 0, WINDOW_HEIGHT - GRID_Y_PADDING);
+    render_text("Game of Life", WINDOW_WIDTH / 3, 0, 250, GRID_Y_PADDING);
+    render_text("Generation 0", WINDOW_WIDTH / 4, WINDOW_HEIGHT - GRID_Y_PADDING, 350, GRID_Y_PADDING);
 
     for (int i = 0; i < GRID_SIZE; i++)
     {
@@ -71,20 +73,27 @@ void render_game_of_life()
     }
 }
 
-void render_background()
+void render_background(void)
 {
     rgba_t background_rgba = get_rgba(black);
     SDL_SetRenderDrawColor(renderer, background_rgba.red, background_rgba.green, background_rgba.blue, background_rgba.alpha);
 }
 
-void render()
+void print_current_generation(void)
 {
+    printf("%d \n", generation_count);
+    generation_count++;
+}
+
+void render(void)
+{
+    timer_lock(&print_current_generation, 1000);
     render_background();
     render_game_of_life();
     SDL_RenderPresent(renderer);
 }
 
-void run_program()
+void run_program(void)
 {
     init_generation();
 
@@ -97,7 +106,7 @@ void run_program()
     SDL_DestroyRenderer(renderer);
 }
 
-void run_game_of_life()
+void run_game_of_life(void)
 {
     run_program();
 }
