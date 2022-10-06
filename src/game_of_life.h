@@ -14,8 +14,8 @@
 
 typedef enum Cell_State
 {
-    alive,
-    dead
+    dead,
+    alive
 } cell_state_t;
 
 typedef struct Cell
