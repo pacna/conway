@@ -1,6 +1,12 @@
 #include "global.h"
 
-int random_num(int min, int max)
+// needs to be set first before using get_random_num()
+void seed_random_num(void)
+{
+    srand(time(NULL));
+}
+
+int get_random_num(int min, int max)
 {
     return min + rand() % (max + 1 - min);
 }

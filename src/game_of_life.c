@@ -36,7 +36,7 @@ void create_fill_rect(SDL_Rect rect, color_t color)
     SDL_RenderFillRect(renderer, &rect);
 }
 
-void render_square(unsigned int x, unsigned int y, int is_alive)
+void render_cell(unsigned int x, unsigned int y, int is_alive)
 {
     SDL_Rect rect;
     rect.x = NEXT_X(x);
@@ -54,12 +54,12 @@ void render_square(unsigned int x, unsigned int y, int is_alive)
     }
 }
 
-int is_in_range(int current_index)
+bool is_in_range(int current_index)
 {
     return current_index >= 0 && current_index < GRID_SIZE;
 }
 
-int is_valid_pos(int pos)
+bool is_valid_pos(int pos)
 {
     return pos >= 0 && pos < ROW_SIZE;
 }
@@ -86,12 +86,12 @@ bool is_cell_alive(grid_t *grid, int neighbor_x_pos, int neighbor_y_pos)
     return false;
 }
 
-void update_current_generation_grid(void)
+void update_current_generation(void)
 {
     current_generation = next_generation;
 }
 
-void update_generation(unsigned int alive_count, unsigned int cell, int current_index)
+void update_cell(unsigned int alive_count, unsigned int cell, int current_index)
 {
     if (cell == alive)
     {
@@ -139,35 +139,48 @@ void figure_out_alive_cells(void)
             }
         }
 
-        update_generation(alive_count, current_generation.cells[n].state, n);
+        update_cell(alive_count, current_generation.cells[n].state, n);
         alive_count = 0;
     }
 
-    update_current_generation_grid();
+    update_current_generation();
 }
 
 void init_generation(void)
 {
     for (int i = 0; i < GRID_SIZE; i++)
     {
-        current_generation.cells[i].state = random_num(0, 1);
+        current_generation.cells[i].state = get_random_num(0, 1);
     }
 
     next_generation = current_generation;
 }
 
+void render_game_text(void)
+{
+    char generation_count_text[18];
+    sprintf(generation_count_text, "Next Generation %d", generation_count);
+
+    render_text("Game of Life", WINDOW_WIDTH / 3, 0, 250, GRID_Y_PADDING);
+    render_text(generation_count_text, WINDOW_WIDTH / 4, WINDOW_HEIGHT - GRID_Y_PADDING, 350, GRID_Y_PADDING);
+}
+
+void update_generation(void)
+{
+    figure_out_alive_cells();
+    generation_count++;
+}
+
 void render_game_of_life(void)
 {
-    render_text("Game of Life", WINDOW_WIDTH / 3, 0, 250, GRID_Y_PADDING);
-    render_text("Generation 0", WINDOW_WIDTH / 4, WINDOW_HEIGHT - GRID_Y_PADDING, 350, GRID_Y_PADDING);
+    render_game_text();
 
     for (int i = 0; i < GRID_SIZE; i++)
     {
-        render_square(get_cell_x_pos(i), get_cell_y_pos(i), current_generation.cells[i].state);
+        render_cell(get_cell_x_pos(i), get_cell_y_pos(i), current_generation.cells[i].state);
     }
 
-    figure_out_alive_cells();
-    // timer_lock(&display_grid, 1000);
+    timer_lock(&update_generation, 1000);
 }
 
 void render_background(void)
@@ -179,12 +192,14 @@ void render_background(void)
 void render(void)
 {
     render_background();
+    SDL_RenderClear(renderer);
     render_game_of_life();
     SDL_RenderPresent(renderer);
 }
 
 void run_program(void)
 {
+    seed_random_num();
     init_generation();
 
     while (true)
@@ -192,8 +207,6 @@ void run_program(void)
         process_input();
         render();
     }
-
-    SDL_DestroyRenderer(renderer);
 }
 
 void run_game_of_life(void)
