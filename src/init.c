@@ -4,7 +4,7 @@ int init_SDL(void)
 {
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
-        printf("Could not initialize SDL: %s\n", SDL_GetError());
+        log_error(strcat("Could not intialize SDL: ", SDL_GetError()));
         return 0;
     }
 
@@ -28,7 +28,7 @@ int init_window(void)
 
     if (window == NULL)
     {
-        printf("Could not initialize window: %s\n", SDL_GetError());
+        log_error(strcat("Could not intialize window: ", SDL_GetError()));
         return 0;
     }
 
@@ -41,7 +41,7 @@ int init_renderer(void)
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (renderer == NULL)
     {
-        printf("Could not initialize renderer: %s\n", SDL_GetError());
+        log_error(strcat("Could not intialize renderer: ", SDL_GetError()));
         return -1;
     }
 
@@ -52,14 +52,14 @@ int init_TTF(void)
 {
     if (TTF_Init() == -1)
     {
-        printf("Could not initialize TTF: %s\n", SDL_GetError());
+        log_error(strcat("Could not intialize TTF: ", SDL_GetError()));
         return -1;
     }
 
     return 1;
 }
 
-int init_game_of_life(void)
+int init_sdl(void)
 {
     if (!init_window())
     {

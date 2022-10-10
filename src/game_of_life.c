@@ -4,38 +4,6 @@ grid_t current_generation, next_generation;
 
 unsigned int generation_count = 0;
 
-void process_input(void)
-{
-    SDL_Event event;
-    while (SDL_PollEvent(&event))
-    {
-        switch (event.type)
-        {
-        case SDL_QUIT:
-            exit(0);
-            break;
-        default:
-            break;
-        }
-    }
-}
-
-void create_rect(SDL_Rect rect, color_t color)
-{
-    rgba_t sdl_rect_rgba = get_rgba(color);
-
-    SDL_SetRenderDrawColor(renderer, sdl_rect_rgba.red, sdl_rect_rgba.green, sdl_rect_rgba.blue, sdl_rect_rgba.alpha);
-    SDL_RenderDrawRect(renderer, &rect);
-}
-
-void create_fill_rect(SDL_Rect rect, color_t color)
-{
-    rgba_t sdl_rect_rgba = get_rgba(color);
-
-    SDL_SetRenderDrawColor(renderer, sdl_rect_rgba.red, sdl_rect_rgba.green, sdl_rect_rgba.blue, sdl_rect_rgba.alpha);
-    SDL_RenderFillRect(renderer, &rect);
-}
-
 void render_cell(unsigned int x, unsigned int y, int is_alive)
 {
     SDL_Rect rect;
@@ -209,7 +177,7 @@ void run_program(void)
     }
 }
 
-void run_game_of_life(void)
+void run_sdl_game_of_life(void)
 {
     run_program();
 }

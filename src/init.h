@@ -4,6 +4,6 @@
 #define WINDOW_HEIGHT 820
 #define WINDOW_WIDTH 700
 
-extern int init_game_of_life();
+extern int init_sdl(void);
 
 #endif
