@@ -4,7 +4,7 @@ int init_SDL(void)
 {
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
-        log_error(strcat("Could not intialize SDL: ", SDL_GetError()));
+        log_error_with_added_text("Could not initialize SDL: ", SDL_GetError());
         return 0;
     }
 
@@ -28,7 +28,7 @@ int init_window(void)
 
     if (window == NULL)
     {
-        log_error(strcat("Could not intialize window: ", SDL_GetError()));
+        log_error_with_added_text("Could not initialize window: ", SDL_GetError());
         return 0;
     }
 
@@ -41,7 +41,7 @@ int init_renderer(void)
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (renderer == NULL)
     {
-        log_error(strcat("Could not intialize renderer: ", SDL_GetError()));
+        log_error_with_added_text("Could not initialize renderer: ", SDL_GetError());
         return -1;
     }
 
@@ -52,7 +52,7 @@ int init_TTF(void)
 {
     if (TTF_Init() == -1)
     {
-        log_error(strcat("Could not intialize TTF: ", SDL_GetError()));
+        log_error_with_added_text("Could not initialize TTF: ", SDL_GetError());
         return -1;
     }
 

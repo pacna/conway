@@ -6,7 +6,7 @@ void render_text(char *text, unsigned int x, unsigned int y, unsigned int w, uns
 
     if (!open_sans)
     {
-        log_error(strcat("Could not initialize font: ", SDL_GetError()));
+        log_error_with_added_text("Could not initialize font: ", SDL_GetError());
     }
 
     SDL_Color sdl_green = get_sdl_rgba(green);

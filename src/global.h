@@ -19,7 +19,7 @@
 #include "text.h"
 #include "timer.h"
 #include "draw.h"
-#include "terminal.h"
+#include "terminal_sdl.h"
 #include "log.h"
 
 extern SDL_Window *window;
