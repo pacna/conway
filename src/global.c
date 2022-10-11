@@ -2,7 +2,6 @@
 
 SDL_Window *window;
 SDL_Renderer *renderer;
-char *current_mode = NULL;
 
 bool is_sdl_mode(char *input)
 {

@@ -19,7 +19,8 @@
 #include "text.h"
 #include "timer.h"
 #include "draw.h"
-#include "terminal_sdl.h"
+#include "terminal_gol.h"
+#include "sdl_gol.h"
 #include "log.h"
 
 extern SDL_Window *window;
@@ -30,6 +31,5 @@ extern SDL_Renderer *renderer;
 
 extern bool is_sdl_mode(char *input);
 extern bool is_terminal_mode(char *input);
-extern char *current_mode;
 
 #endif

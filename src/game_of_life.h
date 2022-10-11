@@ -28,6 +28,10 @@ typedef struct Grid
     cell_t cells[GRID_SIZE];
 } grid_t;
 
-extern void run_sdl_game_of_life(void);
+extern void init_game_of_life_setup(void);
+extern void update_generation(void);
+
+extern grid_t current_generation;
+extern unsigned int generation_count;
 
 #endif

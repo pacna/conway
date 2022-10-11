@@ -1,43 +1,27 @@
 #include "global.h"
 
 grid_t current_generation, next_generation;
-
 unsigned int generation_count = 0;
 
-void render_cell(unsigned int x, unsigned int y, int is_alive)
-{
-    SDL_Rect rect;
-    rect.x = NEXT_X(x);
-    rect.y = NEXT_Y(y);
-    rect.w = CELL_SIZE;
-    rect.h = CELL_SIZE;
-
-    if (is_alive)
-    {
-        create_fill_rect(rect, green);
-    }
-    else
-    {
-        create_rect(rect, green);
-    }
-}
-
-bool is_in_range(int current_index)
+/**
+ *  --- Private Functions ---
+ **/
+static bool is_in_range(int current_index)
 {
     return current_index >= 0 && current_index < GRID_SIZE;
 }
 
-bool is_valid_pos(int pos)
+static bool is_valid_pos(int pos)
 {
     return pos >= 0 && pos < ROW_SIZE;
 }
 
-int find_index(int neighbor_x_pos, int neighbor_y_pos)
+static int find_index(int neighbor_x_pos, int neighbor_y_pos)
 {
     return COL_SIZE * neighbor_x_pos + neighbor_y_pos;
 }
 
-bool is_cell_alive(grid_t *grid, int neighbor_x_pos, int neighbor_y_pos)
+static bool is_cell_alive(grid_t *grid, int neighbor_x_pos, int neighbor_y_pos)
 {
     if (is_valid_pos(neighbor_x_pos) && is_valid_pos(neighbor_y_pos))
     {
@@ -54,12 +38,7 @@ bool is_cell_alive(grid_t *grid, int neighbor_x_pos, int neighbor_y_pos)
     return false;
 }
 
-void update_current_generation(void)
-{
-    current_generation = next_generation;
-}
-
-void update_cell(unsigned int alive_count, unsigned int cell, int current_index)
+static void update_cell(unsigned int alive_count, unsigned int cell, int current_index)
 {
     if (cell == alive)
     {
@@ -85,7 +64,22 @@ void update_cell(unsigned int alive_count, unsigned int cell, int current_index)
     }
 }
 
-void figure_out_alive_cells(void)
+static void init_generation(void)
+{
+    for (int i = 0; i < GRID_SIZE; i++)
+    {
+        current_generation.cells[i].state = get_random_num(0, 1);
+    }
+
+    next_generation = current_generation;
+}
+
+static void update_current_generation(void)
+{
+    current_generation = next_generation;
+}
+
+static void figure_out_alive_cells(void)
 {
     unsigned int alive_count = 0;
     // neighbors: LEFT, RIGHT, TOP, DOWN, TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
@@ -114,70 +108,18 @@ void figure_out_alive_cells(void)
     update_current_generation();
 }
 
-void init_generation(void)
+/**
+ *  --- Public Functions ---
+ **/
+
+void init_game_of_life_setup(void)
 {
-    for (int i = 0; i < GRID_SIZE; i++)
-    {
-        current_generation.cells[i].state = get_random_num(0, 1);
-    }
-
-    next_generation = current_generation;
-}
-
-void render_game_text(void)
-{
-    char generation_count_text[18];
-    sprintf(generation_count_text, "Next Generation %d", generation_count);
-
-    render_text("Game of Life", WINDOW_WIDTH / 3, 0, 250, GRID_Y_PADDING);
-    render_text(generation_count_text, WINDOW_WIDTH / 4, WINDOW_HEIGHT - GRID_Y_PADDING, 350, GRID_Y_PADDING);
+    seed_random_num();
+    init_generation();
 }
 
 void update_generation(void)
 {
     figure_out_alive_cells();
     generation_count++;
-}
-
-void render_game_of_life(void)
-{
-    render_game_text();
-
-    for (int i = 0; i < GRID_SIZE; i++)
-    {
-        render_cell(get_cell_x_pos(i), get_cell_y_pos(i), current_generation.cells[i].state);
-    }
-
-    timer_lock(&update_generation, 1000);
-}
-
-void render_background(void)
-{
-    rgba_t background_rgba = get_rgba(black);
-    SDL_SetRenderDrawColor(renderer, background_rgba.red, background_rgba.green, background_rgba.blue, background_rgba.alpha);
-}
-
-void render(void)
-{
-    render_background();
-    SDL_RenderClear(renderer);
-    render_game_of_life();
-    SDL_RenderPresent(renderer);
-}
-
-void run_program(void)
-{
-    seed_random_num();
-    init_generation();
-
-    while (true)
-    {
-        process_input();
-        render();
-    }
-}
-
-void run_sdl_game_of_life(void)
-{
-    run_program();
 }

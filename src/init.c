@@ -1,6 +1,9 @@
 #include "global.h"
 
-int init_SDL(void)
+/**
+ *  --- Private Functions ---
+ **/
+static int init_SDL(void)
 {
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
@@ -11,7 +14,7 @@ int init_SDL(void)
     return 1;
 }
 
-int init_window(void)
+static int init_window(void)
 {
     window = NULL;
 
@@ -35,7 +38,7 @@ int init_window(void)
     return 1;
 }
 
-int init_renderer(void)
+static int init_renderer(void)
 {
     renderer = NULL;
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -48,7 +51,7 @@ int init_renderer(void)
     return 1;
 }
 
-int init_TTF(void)
+static int init_TTF(void)
 {
     if (TTF_Init() == -1)
     {
@@ -58,6 +61,10 @@ int init_TTF(void)
 
     return 1;
 }
+
+/**
+ *  --- Public Functions ---
+ **/
 
 int init_sdl(void)
 {
