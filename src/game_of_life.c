@@ -1,7 +1,7 @@
 #include "global.h"
 
 grid_t current_generation, next_generation;
-unsigned int generation_count = 0;
+int generation_count = 0;
 
 /**
  *  --- Private Functions ---
@@ -38,7 +38,7 @@ static bool is_cell_alive(grid_t *grid, int neighbor_x_pos, int neighbor_y_pos)
     return false;
 }
 
-static void update_cell(unsigned int alive_count, unsigned int cell, int current_index)
+static void update_cell(int alive_count, int cell, int current_index)
 {
     if (cell == alive)
     {
@@ -81,7 +81,7 @@ static void update_current_generation(void)
 
 static void figure_out_alive_cells(void)
 {
-    unsigned int alive_count = 0;
+    int alive_count = 0;
     // neighbors: LEFT, RIGHT, TOP, DOWN, TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
     int neighbor_x_offset[8] = {-1, 1, 0, 0, -1, -1, 1, 1};
     int neighbor_y_offset[8] = {0, 0, -1, 1, -1, 1, -1, 1};

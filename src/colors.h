@@ -16,15 +16,6 @@ typedef enum Color
     white
 } color_t;
 
-typedef struct RGBA
-{
-    uint8_t red;
-    uint8_t green;
-    uint8_t blue;
-    uint8_t alpha;
-} rgba_t;
-
-extern rgba_t get_rgba(color_t color_index);
 extern SDL_Color get_sdl_rgba(color_t color_index);
 
 #endif

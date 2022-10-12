@@ -1,8 +1,9 @@
 #include "global.h"
 
-unsigned int last_time = 0, current_time;
+static int last_time = 0;
+static int current_time;
 
-void timer_lock(void (*fn)(void), unsigned int ms)
+void set_sdl_timeout(void (*fn)(void), int ms)
 {
     current_time = SDL_GetTicks();
     if (current_time > last_time + ms)
@@ -10,4 +11,10 @@ void timer_lock(void (*fn)(void), unsigned int ms)
         (fn());
         last_time = current_time;
     }
+}
+
+void set_terminal_timeout(void (*fn)(void), int ms)
+{
+    sleep(ms / 1000);
+    (fn());
 }

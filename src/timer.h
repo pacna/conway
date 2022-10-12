@@ -1,6 +1,7 @@
 #ifndef TIMER__
 #define TIMER__
 
-extern void timer_lock(void (*fn)(void), unsigned int ms);
+extern void set_sdl_timeout(void (*fn)(void), int ms);
+extern void set_terminal_timeout(void (*fn)(void), int ms);
 
 #endif

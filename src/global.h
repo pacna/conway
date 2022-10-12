@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include <string.h>
+#include <unistd.h>
 
 // Third party headers
 #include <SDL2/SDL.h>

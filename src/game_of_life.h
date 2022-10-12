@@ -32,6 +32,6 @@ extern void init_game_of_life_setup(void);
 extern void update_generation(void);
 
 extern grid_t current_generation;
-extern unsigned int generation_count;
+extern int generation_count;
 
 #endif

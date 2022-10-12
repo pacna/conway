@@ -19,7 +19,7 @@ static void process_input(void)
     }
 }
 
-static void render_cell(unsigned int x, unsigned int y, int is_alive)
+static void render_cell(int x, int y, int is_alive, color_t color)
 {
     SDL_Rect rect;
     rect.x = NEXT_X(x);
@@ -29,21 +29,33 @@ static void render_cell(unsigned int x, unsigned int y, int is_alive)
 
     if (is_alive)
     {
-        create_fill_rect(rect, green);
+        create_fill_rect(rect, color);
     }
     else
     {
-        create_rect(rect, green);
+        create_rect(rect, color);
     }
 }
 
 static void render_game_text(void)
 {
-    char generation_count_text[18];
-    sprintf(generation_count_text, "Next Generation %d", generation_count);
+    char generation_count_text[16];
+    sprintf(generation_count_text, "Generation %d", generation_count);
 
-    render_text("Game of Life", WINDOW_WIDTH / 3, 0, 250, GRID_Y_PADDING);
-    render_text(generation_count_text, WINDOW_WIDTH / 4, WINDOW_HEIGHT - GRID_Y_PADDING, 350, GRID_Y_PADDING);
+    SDL_Rect title_rect;
+    title_rect.x = WINDOW_WIDTH / 3;
+    title_rect.y = 0;
+    title_rect.w = 250;
+    title_rect.h = GRID_X_PADDING;
+
+    SDL_Rect generation_rect;
+    generation_rect.x = WINDOW_WIDTH / 4;
+    generation_rect.y = WINDOW_HEIGHT - GRID_Y_PADDING;
+    generation_rect.w = 350;
+    generation_rect.h = GRID_Y_PADDING;
+
+    render_text("Game of Life", title_rect, green);
+    render_text(generation_count_text, generation_rect, green);
 }
 
 static void render_game_of_life(void)
@@ -52,16 +64,16 @@ static void render_game_of_life(void)
 
     for (int i = 0; i < GRID_SIZE; i++)
     {
-        render_cell(get_cell_x_pos(i), get_cell_y_pos(i), current_generation.cells[i].state);
+        render_cell(get_cell_x_pos(i), get_cell_y_pos(i), current_generation.cells[i].state, green);
     }
 
-    timer_lock(&update_generation, 1000);
+    set_sdl_timeout(&update_generation, 1000);
 }
 
 static void render_background(void)
 {
-    rgba_t background_rgba = get_rgba(black);
-    SDL_SetRenderDrawColor(renderer, background_rgba.red, background_rgba.green, background_rgba.blue, background_rgba.alpha);
+    SDL_Color background_rgba = get_sdl_rgba(black);
+    SDL_SetRenderDrawColor(renderer, background_rgba.r, background_rgba.g, background_rgba.b, background_rgba.a);
 }
 
 static void render(void)
