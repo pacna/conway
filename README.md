@@ -1,6 +1,6 @@
 # SDL Game of Life
 
-[Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) written in C. Built using SDL.
+SDL Game of Life is a C implementation of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life), a cellular automaton game that simulates the evolution of a grid of cells according to specific rules. The project is built using the SDL library and can be run in both an SDL app mode and a terminal app mode.
 
 ## SDL app mode
 
@@ -66,32 +66,33 @@ Generation 2
 
 ## Ubuntu Prerequisites
 
-```bash
-$ apt-get install libsdl2-ttf-dev
-```
+Before you can build and run SDL Game of Life, make sure you have the following installed on your system:
 
-### Troubleshoot
+1.  [Make](https://www.gnu.org/software/make/)
+2.  GCC (`apt install gcc`)
+3.  SDL library (`apt-get install libsdl2-ttf-dev`)
 
-If you experience this error
+### How to Build and Run
 
-```
-make: gcc: No such file or directory
-make: *** [<builtin>: src/main.o] Error 127
-```
-
-Install the following
+To build the project and run it in SDL app mode, run the following command:
 
 ```bash
-$ apt install gcc
+$ make
 ```
 
-### How to build and run
+Alternatively, to explicitly build and run the project in SDL app mode, run:
 
 ```bash
-# both ways will run in sdl app mode
-$ sh build_and_run.sh
-$ sh build_and_run.sh sdl
-
-# terminal app mode
-$ sh build_and_run.sh terminal
+$ make OPT=sdl
 ```
+
+To build and run the project in terminal app mode, run:
+
+```bash
+$ make OPT=terminal
+```
+
+## Build Options
+
+-   `sdl`: builds the project with an SDL interface and runs it in app mode
+-   `terminal`: builds the project with a terminal interface and runs it in terminal mode

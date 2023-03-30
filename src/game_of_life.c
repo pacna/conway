@@ -42,26 +42,12 @@ static void update_cell(int alive_count, int cell, int current_index)
 {
     if (cell == alive)
     {
-        if (alive_count == 2 || alive_count == 3)
-        {
-            next_generation.cells[current_index].state = alive;
-        }
-        else
-        {
-            next_generation.cells[current_index].state = dead;
-        }
+        next_generation.cells[current_index].state = (alive_count == 2 || alive_count == 3) ? alive : dead;
+        return;
     }
-    else
-    {
-        if (alive_count == 3)
-        { // only way a dead cell can be revived if it has exactly 3 alive neighbors
-            next_generation.cells[current_index].state = alive;
-        }
-        else
-        {
-            next_generation.cells[current_index].state = dead;
-        }
-    }
+
+    // only way a dead cell can be revived if it has exactly 3 alive neighbors
+    next_generation.cells[current_index].state = alive_count == 3 ? alive : dead;
 }
 
 static void init_generation(void)
