@@ -24,7 +24,7 @@ static int init_window(void)
     }
 
     window = SDL_CreateWindow(
-        "SDL Game of Life",
+        "Conway",
         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
         WINDOW_WIDTH, WINDOW_HEIGHT,
         SDL_WINDOW_SHOWN);
